@@ -16,14 +16,10 @@ class HomeController extends Controller
                 });
             })
             ->when($request->filled('min_price'), function ($query) use ($request) {
-                $query->whereHas('typeRoom', function ($subQuery) use ($request) {
-                    $subQuery->where('price', '>=', $request->min_price);
-                });
+                    $query->where('price_night', '>=', $request->min_price);
             })
             ->when($request->filled('max_price'), function ($query) use ($request) {
-                $query->whereHas('typeRoom', function ($subQuery) use ($request) {
-                    $subQuery->where('price', '<=', $request->max_price);
-                });
+                    $query->where('price_night', '<=', $request->max_price);
             });
     
         if ($request->filled('sort') && in_array($request->sort, ['asc', 'desc'])) {
