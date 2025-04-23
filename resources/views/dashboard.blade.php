@@ -7,6 +7,15 @@
 
     <div class="py-10">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <form method="GET" action="{{ route('dashboard.index') }}" class="mb-4 flex items-center gap-4">
+                <div>
+                    <label for="date" class="text-sm text-gray-600">Pilih Tanggal</label>
+                    <input type="date" id="date" name="date" value="{{ request('date') }}" class="border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-200">
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                        Filter
+                    </button>
+                </div>
+            </form>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="bg-white rounded-xl shadow p-6">
@@ -29,7 +38,13 @@
                 </div>
 
                 <div class="bg-white rounded-xl shadow p-6">
-                    <h3 class="text-sm text-gray-500">Total Pendapatan Bulan Ini</h3>
+                    <h3 class="text-sm text-gray-500">Total Pendapatan
+                        @if(request('date'))
+                            ({{ \Carbon\Carbon::parse(request('date'))->format('d M Y') }})
+                        @else
+                            (Bulan Ini)
+                        @endif
+                    </h3>
                     <p class="text-xl font-bold text-emerald-600 mt-2">
                         Rp {{ number_format($totalIncome, 0, ',', '.') }}
                     </p>
